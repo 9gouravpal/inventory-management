@@ -1,0 +1,34 @@
+package com.venture.exception;
+
+/**
+ * Custom, parameterized exception, which can be translated on the client side.
+ * For example:
+ *
+ * <pre>
+ * throw new CustomParameterizedException(&quot;myCustomError&quot;, &quot;hello&quot;, &quot;world&quot;);
+ * </pre>
+ *
+ * Can be translated with:
+ *
+ * <pre>
+ * "error.myCustomError" :  "The server says {{params[0]}} to {{params[1]}}"
+ * </pre>
+ */
+public class DataNotFoundException extends RuntimeException {
+
+	private static final long serialVersionUID = 1L;
+
+	private final String message;
+	private final String[] params;
+
+	public DataNotFoundException(String message, String... params) {
+		super(message);
+		this.message = message;
+		this.params = params;
+	}
+
+	public ParameterizedErrorDTO getErrorDTO() {
+		return new ParameterizedErrorDTO(message, params);
+	}
+
+}
